@@ -13,9 +13,9 @@ st.write(
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
 columns = st.columns(2)
-start = columns[0].number_input("Start time of the breath recording")
+start = columns[0].number_input("Start time of the breath recording", format="%.3f")
 columns[0].write(start)
-end = columns[1].number_input("End time of the breath recording")
+end = columns[1].number_input("End time of the breath recording", format="%.3f")
 columns[1].write(end)
 
 # Optional: play the uploaded audio in the UI
