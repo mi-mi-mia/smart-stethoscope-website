@@ -10,9 +10,8 @@ st.write("Upload a respiratory audio file and its annotation file to get a predi
 
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
-#annotation_file = st.file_uploader("Upload annotation file (.txt)", type=["txt"])
 start = st.number_input('Input start time of the breath recording')
-end = st.number_input('input stop time of the breath recording')
+end = st.number_input('input end time of the breath recording')
 
 # Optional: play the uploaded audio in the UI
 if audio_file is not None:
@@ -52,15 +51,9 @@ if st.button("Run prediction"):
                 st.subheader("Result")
 
                 st.write(f"**Prediction:** {result['prediction']}")
-                st.write(f"**Prediction (class id):** {result['final_prediction_int']}")
 
                 st.subheader("Model probabilities")
                 st.write(f"Final probabilities: {result['final_proba']}")
-
-                st.subheader("Chunk-level outputs")
-                st.write("XGB:", result["xgb_chunk_proba"])
-                st.write("CNN:", result["cnn_chunk_proba"])
-                st.write("Fused:", result["fused_chunk_proba"])
 
             else:
                 st.error("The API returned an error.")
