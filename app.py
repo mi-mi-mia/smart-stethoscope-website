@@ -10,7 +10,9 @@ st.write("Upload a respiratory audio file and its annotation file to get a predi
 
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
-annotation_file = st.file_uploader("Upload annotation file (.txt)", type=["txt"])
+#annotation_file = st.file_uploader("Upload annotation file (.txt)", type=["txt"])
+start = st.number_input('Input start time of the breath recording')
+end = st.number_input('input stop time of the breath recording')
 
 # Optional: play the uploaded audio in the UI
 if audio_file is not None:
