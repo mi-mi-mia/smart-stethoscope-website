@@ -6,12 +6,17 @@ API_URL = "https://stetho-api-248800634185.europe-west1.run.app/predict"
 st.set_page_config(page_title="Smart Stethoscope", page_icon="🫁")
 
 st.title("Smart Stethoscope")
-st.write("Upload a respiratory audio file and its annotation file to get a prediction.")
+st.write(
+    "Upload a respiratory audio file and enter breathing start and end time to get a prediction."
+)
 
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
-start = st.number_input('Input start time of the breath recording')
-end = st.number_input('input end time of the breath recording')
+columns = st.columns(2)
+start = columns[0].number_input("Start time of the breath recording")
+columns[0].write(start)
+end = columns[1].number_input("End time of the breath recording")
+columns[1].write(end)
 
 # Optional: play the uploaded audio in the UI
 if audio_file is not None:
@@ -26,7 +31,6 @@ if st.button("Run prediction"):
         files = {
             "audio_file": (audio_file.name, audio_file.getvalue(), "audio/wav"),
         }
-
 
         data = {
             "start": start,
