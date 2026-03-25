@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_URL = "https://stetho-api-248800634185.europe-west1.run.app/predict"
+API_URL = "https://stetho-api-700547311232.europe-west1.run.app/predict"
 
 st.set_page_config(page_title="Smart Stethoscope", page_icon="🫁")
 
