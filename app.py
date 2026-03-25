@@ -19,21 +19,29 @@ if audio_file is not None:
     st.audio(audio_file)
 
 if st.button("Run prediction"):
-    if audio_file is None or annotation_file is None:
-        st.error("Please upload both the audio file and the annotation file.")
+    if audio_file is None:
+        st.error("Please upload an audio file.")
+    elif end <= start:
+        st.error("End time must be greater than start time.")
     else:
         files = {
             "audio_file": (audio_file.name, audio_file.getvalue(), "audio/wav"),
-            "annotation_file": (
-                annotation_file.name,
-                annotation_file.getvalue(),
-                "text/plain",
-            ),
+        }
+
+
+        data = {
+            "start": start,
+            "end": end,
         }
 
         try:
-            with st.spinner("Sending files to API and running prediction..."):
-                response = requests.post(API_URL, files=files, timeout=120)
+            with st.spinner("Sending data to API and running prediction..."):
+                response = requests.post(
+                    API_URL,
+                    files=files,
+                    data=data,
+                    timeout=120,
+                )
 
             st.write(f"Status code: {response.status_code}")
 
@@ -42,19 +50,23 @@ if st.button("Run prediction"):
 
                 st.success("Prediction complete")
                 st.subheader("Result")
-                st.write(f"**Prediction:** {result['prediction']}")
-                st.write(f"**Cycles analysed:** {result['cycles_analysed']}")
 
-                st.subheader("Cycle-level predictions")
-                st.write(result["cycle_predictions"])
+                st.write(f"**Prediction:** {result['prediction']}")
+                st.write(f"**Prediction (class id):** {result['final_prediction_int']}")
+
+                st.subheader("Model probabilities")
+                st.write(f"Final probabilities: {result['final_proba']}")
+
+                st.subheader("Chunk-level outputs")
+                st.write("XGB:", result["xgb_chunk_proba"])
+                st.write("CNN:", result["cnn_chunk_proba"])
+                st.write("Fused:", result["fused_chunk_proba"])
 
             else:
                 st.error("The API returned an error.")
                 st.text(response.text)
 
         except requests.exceptions.Timeout:
-            st.error(
-                "The request timed out. The API may just be taking a while to process."
-            )
+            st.error("The request timed out.")
         except requests.exceptions.RequestException as e:
             st.error(f"Request failed: {e}")
