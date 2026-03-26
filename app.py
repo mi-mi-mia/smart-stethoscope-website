@@ -117,7 +117,10 @@ st.markdown('<div class="section-space">', unsafe_allow_html=True)
 audio_file = st.file_uploader("Upload respiratory audio (.wav)", type=["wav"])
 columns = st.columns(2)
 start = columns[0].number_input("Breath start (seconds)", min_value=0.0, format="%.3f")
+columns[0].write(start)
 end = columns[1].number_input("Breath end (seconds)", min_value=0.0, format="%.3f")
+columns[1].write(end)
+st.write(f"The current length of the audio to be analyzed is: {end - start} seconds")
 
 # State length of selected audio window
 st.caption(f"Selected window: {start:.3f}s to {end:.3f}s")
@@ -166,18 +169,16 @@ if run_prediction:
             if response.status_code == 200:
                 result = response.json()
 
-                result = response.json()
+                # Pull values out of the response safely
+                prediction = result.get("prediction", "Unknown")
+                final_proba = result.get("final_proba", {})
 
-                # Pull values out of the response using the ACTUAL API keys
-                prediction_label = result.get("prediction", "Unknown")
-                confidence = result.get("confidence", None)
-                class_probabilities = result.get("class_probabilities", {})
+                # Try to calculate confidence from the probabilities if possible
+                confidence_text = "Confidence unavailable"
 
-                # Build confidence text
-                if confidence is not None:
-                    confidence_text = f"{confidence:.1%} confidence"
-                else:
-                    confidence_text = "Confidence unavailable"
+                if isinstance(final_proba, dict) and len(final_proba) > 0:
+                    top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
+                    confidence_text = f"{top_score:.1%} confidence"
 
                 st.success("Prediction complete")
 
@@ -185,47 +186,31 @@ if run_prediction:
                 st.markdown(
                     f"""
                     <div class="result-card">
-                        <div class="result-label">Top prediction</div>
-                        <div class="result-prediction">{prediction_label}</div>
+                        <div class="result-label">Prediction</div>
+                        <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
                     """,
                     unsafe_allow_html=True,
                 )
 
-                # Show other likely classes + all probabilities
-                if isinstance(class_probabilities, dict) and len(class_probabilities) > 0:
+                # Show probabilities
+                st.subheader("Model probabilities")
+
+                if isinstance(final_proba, dict) and len(final_proba) > 0:
                     # Sort probabilities highest first
                     sorted_proba = sorted(
-                        class_probabilities.items(),
+                        final_proba.items(),
                         key=lambda x: x[1],
                         reverse=True
                     )
 
-                    # Show top 2 alternatives, excluding the main prediction
-                    other_classes = [
-                        (label, score)
-                        for label, score in sorted_proba
-                        if label != prediction_label
-                    ][:2]
-
-                    if len(other_classes) > 0:
-                        st.subheader("Other possible classes")
-
-                        for label, score in other_classes:
-                            st.write(f"**{label}:** {score:.1%}")
-
-                    # Keep full probabilities available but tucked away
-                    with st.expander("All class probabilities"):
-                        for label, score in sorted_proba:
-                            st.write(f"**{label}:** {score:.1%}")
+                    # Show one line per class
+                    for label, score in sorted_proba:
+                        st.write(f"**{label}:** {score:.1%}")
                 else:
-                    st.write(class_probabilities)
-
-                # Optional demo-safe note
-                st.caption(
-                    "This model output is for demonstration purposes only and is not a medical diagnosis."
-                )
+                    # Fallback in case the API returns a different structure
+                    st.write(final_proba)
 
             else:
                 # Simple error message
