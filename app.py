@@ -43,7 +43,7 @@ st.markdown(
 
     .result-card {
         background-color: rgba(255, 255, 255, 0.45);
-        border: 1px solid rgba(79, 157, 166, 0.35);  /* soft teal border */
+        border: 1px solid rgba(79, 157, 166, 0.35);
         border-radius: 12px;
         padding: 1rem 1rem 0.75rem 1rem;
         margin-top: 1rem;
@@ -79,22 +79,22 @@ st.markdown(
         padding-bottom: 0.5rem;
     }
 
-    a {
+    div[data-testid="stMarkdownContainer"] a {
         color: #a64d79;
         text-decoration: none;
         font-weight: 500;
     }
 
-    a:hover {
+    div[data-testid="stMarkdownContainer"] a:hover {
         text-decoration: underline;
     }
 
-    .streamlit-expanderHeader {
+    details summary {
         color: #1f2a2e;
         font-weight: 600;
     }
 
-    .streamlit-expanderHeader:hover {
+    details summary:hover {
         color: #a64d79;
     }
 
@@ -110,8 +110,12 @@ st.markdown(
 col_title, col_logo = st.columns([3, 1])
 
 with col_title:
-    st.markdown('<h1 class="main-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="app-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<p class="app-subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>',
+        unsafe_allow_html=True,
+    )
+    st.markdown('<div class="title-divider"></div>', unsafe_allow_html=True)
 
 with col_logo:
     logo_path = "logo_woozle.png"
@@ -120,16 +124,6 @@ with col_logo:
     else:
         pass # if image doesnt exist #Added Ant
 
-#st.markdown(
-#    """
-#    <div class="app-title">Smart Stethoscope</div>
-#    <div class="app-subtitle">
-#        Upload a respiratory audio file, select a breath window, and run a prediction.
-#    </div>
-#    <div class="title-divider"></div>
-#    """,
-#   unsafe_allow_html=True,
-#)
 
 # ---------- Input section ----------
 st.markdown('<div class="section-space">', unsafe_allow_html=True)
@@ -138,9 +132,7 @@ st.markdown('<div class="section-space">', unsafe_allow_html=True)
 audio_file = st.file_uploader("Upload respiratory audio (.wav)", type=["wav"])
 columns = st.columns(2)
 start = columns[0].number_input("Breath start (seconds)", min_value=0.0, format="%.3f")
-columns[0].write(start)
 end = columns[1].number_input("Breath end (seconds)", min_value=0.0, format="%.3f")
-columns[1].write(end)
 
 # State length of selected audio window
 st.caption(f"Selected window: {start:.3f}s to {end:.3f}s")
