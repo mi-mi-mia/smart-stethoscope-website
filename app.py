@@ -197,6 +197,10 @@ if run_prediction:
 
                 st.caption("This result reflects patterns in the data and should not be interpreted as a medical diagnosis.")
 
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                st.subheader("Further information")
+
                 with st.expander("About respiratory conditions"):
 
                     st.markdown("A brief overview of conditions this model can detect:")
