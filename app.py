@@ -10,6 +10,73 @@ st.write(
     "Upload a respiratory audio file and enter breathing start and end time to get a prediction."
 )
 
+# ---------- Styling ----------
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #e9eef0;
+    }
+
+    h1, h2, h3 {
+        color: #1f2a2e;
+    }
+
+    .main-title {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        color: #1f2a2e;
+        margin-bottom: 0.2rem;
+    }
+
+    .subtitle {
+        color: #4a5a5f;
+        font-size: 1.05rem;
+        margin-bottom: 2rem;
+    }
+
+    .section-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #2f7f7b;
+        text-transform: uppercase;
+        margin-bottom: 0.4rem;
+    }
+
+    .card {
+        background-color: #f8fbfc;
+        padding: 1.2rem 1.2rem 1rem 1.2rem;
+        border-radius: 18px;
+        border: 1px solid #d6e0e3;
+        margin-bottom: 1rem;
+    }
+
+    .result-card {
+        background-color: #fff7f5;
+        padding: 1.2rem;
+        border-radius: 18px;
+        border: 1px solid #f0c8bd;
+        margin-top: 1rem;
+    }
+
+    .prediction-label {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1f2a2e;
+        margin-bottom: 0.2rem;
+    }
+
+    .small-muted {
+        color: #5b6a6f;
+        font-size: 0.95rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
 columns = st.columns(2)
