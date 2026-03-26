@@ -225,13 +225,13 @@ if run_prediction:
                     **COPD**: A chronic lung condition that causes breathing difficulties.
                     🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
 
-                    **Pneumonia** — An infection that inflames the lungs, often causing cough and fever.
+                    **Pneumonia**: An infection that inflames the lungs, often causing cough and fever.
                     🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
 
-                    **URTI** — An upper respiratory tract infection, like a cold or sinus infection.
+                    **URTI**: An upper respiratory tract infection, like a cold or sinus infection.
                     🔗 [Learn more](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
 
-                     **Healthy** — No clear signs of a respiratory condition detected.
+                     **Healthy**: No clear signs of a respiratory condition detected.
                     """)
 
                     st.caption("If you have concerns about your symptoms, we recommend speaking to a GP.")
