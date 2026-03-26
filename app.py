@@ -199,7 +199,7 @@ if run_prediction:
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                st.subheader("Further information")
+                st.subheader("Learn more about your result")
 
                 with st.expander("About respiratory conditions"):
 
@@ -214,22 +214,27 @@ if run_prediction:
                     st.caption("If you’re concerned about your symptoms, please consult a GP.")
 
                 # Show probabilities
-                st.subheader("Model probabilities")
+                with st.expander("About your prediction"):
 
-                if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
-                    # Sort probabilities highest first
-                    sorted_proba = sorted(
-                        prediction['class_probabilities'].items(),
-                        key=lambda x: x[1],
-                        reverse=True
+                    st.caption(
+                        "These numbers indicate how strongly the predictive model matched each condition, based on the audio pattern."
                     )
 
-                    # Show one line per class
-                    for label, score in sorted_proba:
-                        st.write(f"**{label}:** {score:.1%}")
-                else:
-                    # Fallback in case the API returns a different structure
-                    st.write(final_proba)
+                    if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
+                        # Sort probabilities highest first
+                        sorted_proba = sorted(
+                            prediction['class_probabilities'].items(),
+                            key=lambda x: x[1],
+                            reverse=True
+                        )
+
+                        # Show one line per class
+                        for label, score in sorted_proba:
+                            st.write(f"**{label}:** {score:.1%}")
+
+                    else:
+                        # Fallback in case the API returns a different structure
+                        st.write(final_proba)
 
             else:
                 # Simple error message
