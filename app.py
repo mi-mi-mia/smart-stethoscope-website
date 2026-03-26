@@ -52,6 +52,7 @@ st.markdown(
 
     .result-label {
         color: #4f9da6;
+        opacity: 0.85;
         font-size: 0.9rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -67,7 +68,7 @@ st.markdown(
     }
 
     .result-confidence {
-        color: #7d5a78;  /* muted pink-plum accent */
+        color: #a64d79;
         font-size: 1rem;
         font-weight: 600;
         margin-bottom: 0.25rem;
@@ -77,6 +78,26 @@ st.markdown(
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
     }
+
+    a {
+        color: #a64d79;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .streamlit-expanderHeader {
+        color: #1f2a2e;
+        font-weight: 600;
+    }
+
+    .streamlit-expanderHeader:hover {
+        color: #a64d79;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -207,16 +228,16 @@ if run_prediction:
 
                     st.markdown("""
                     **Bronchiectasis**: A long-term condition where the airways become widened and inflamed.
-                    [Learn more 🔗](https://www.mayoclinic.org/diseases-conditions/bronchiectasis/symptoms-causes/syc-20351190)
+                    🔗 [Learn more](https://www.mayoclinic.org/diseases-conditions/bronchiectasis/symptoms-causes/syc-20351190)
 
                     **COPD**: A chronic lung condition that causes breathing difficulties.
-                    [Learn more 🔗](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
+                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
 
                     **Pneumonia** — An infection that inflames the lungs, often causing cough and fever.
-                    [Learn more 🔗](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
+                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
 
                     **URTI** — An upper respiratory tract infection, like a cold or sinus infection.
-                    [Learn more 🔗](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
+                    🔗 [Learn more](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
 
                      **Healthy** — No clear signs of a respiratory condition detected.
                     """)
@@ -228,6 +249,9 @@ if run_prediction:
 
                     st.caption(
                         "This shows how closely your audio sample matched patterns associated with each condition."
+                    )
+                    st.caption(
+                        "These percentages reflect relative likelihoods, **not** a confirmed diagnosis."
                     )
 
                     if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
