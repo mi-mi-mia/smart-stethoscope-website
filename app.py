@@ -191,16 +191,16 @@ if run_prediction:
                 if isinstance(final_proba, list) and len(final_proba) > 0:
                     #top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
                     top_score = max(final_proba)
-                    confidence_text = f"{top_score:.1%} confidence"
+                    confidence_text = f"{top_score:.1%} match"
 
 
-                st.success("Prediction complete")
+                st.success("Analysis complete")
 
                 # PREDICTION RESULT
                 st.markdown(
                     f"""
                     <div class="result-card">
-                        <div class="result-label">Prediction</div>
+                        <div class="result-label">Most likely match</div>
                         <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
