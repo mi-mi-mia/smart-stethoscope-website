@@ -117,23 +117,29 @@ if audio_file is not None:
 
 
 # ---------- Action ----------
-if st.button("Run prediction"):
+run_prediction = st.button("Run prediction")
+
+if run_prediction:
+    # Validate inputs before calling API
     if audio_file is None:
-        st.error("Please upload an audio file.")
+        st.error("Please upload a .wav audio file before running the prediction.")
     elif end <= start:
         st.error("End time must be greater than start time.")
     else:
+        # Prepare the file for the FastAPI backend
         files = {
             "audio_file": (audio_file.name, audio_file.getvalue(), "audio/wav"),
         }
 
+        # Prepare the form data for the selected breath window
         data = {
             "start": start,
             "end": end,
         }
 
         try:
-            with st.spinner("Sending data to API and running prediction..."):
+            # Spinner while waiting for the API
+            with st.spinner("Running prediction..."):
                 response = requests.post(
                     API_URL,
                     files=files,
@@ -141,27 +147,66 @@ if st.button("Run prediction"):
                     timeout=120,
                 )
 
-            st.write(f"Status code: {response.status_code}")
-
+            # Only show success UI when the API actually returns 200
             if response.status_code == 200:
                 result = response.json()
 
+                # Pull values out of the response safely
+                prediction = result.get("prediction", "Unknown")
+                final_proba = result.get("final_proba", {})
+
+                # Try to calculate confidence from the probabilities if possible
+                confidence_text = "Confidence unavailable"
+
+                if isinstance(final_proba, dict) and len(final_proba) > 0:
+                    top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
+                    confidence_text = f"{top_score:.1%} confidence"
+
                 st.success("Prediction complete")
-                st.subheader("Result")
 
-                st.write(f"**Prediction:** {result['prediction']}")
+                # PREDICTION RESULT
+                st.markdown(
+                    f"""
+                    <div class="result-card">
+                        <div class="result-label">Prediction</div>
+                        <div class="result-prediction">{prediction}</div>
+                        <div class="result-confidence">{confidence_text}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
+                # Show probabilities
                 st.subheader("Model probabilities")
-                st.write(f"Final probabilities: {result['final_proba']}")
+
+                if isinstance(final_proba, dict) and len(final_proba) > 0:
+                    # Sort probabilities highest first
+                    sorted_proba = sorted(
+                        final_proba.items(),
+                        key=lambda x: x[1],
+                        reverse=True
+                    )
+
+                    # Show one line per class
+                    for label, score in sorted_proba:
+                        st.write(f"**{label}:** {score:.1%}")
+                else:
+                    # Fallback in case the API returns a different structure
+                    st.write(final_proba)
 
             else:
+                # Simple error message
+                # With technical info underneath for debugging
                 st.error("The API returned an error.")
-                st.write("Response text:")
-                st.write(response.text)
-                st.write("Response headers:")
-                st.write(dict(response.headers))
+
+                with st.expander("Technical details"):
+                    st.write(f"Status code: {response.status_code}")
+                    st.write("Response text:")
+                    st.write(response.text)
+                    st.write("Response headers:")
+                    st.write(dict(response.headers))
 
         except requests.exceptions.Timeout:
-            st.error("The request timed out.")
+            st.error("The request timed out. Please try again.")
         except requests.exceptions.RequestException as e:
             st.error(f"Request failed: {e}")
