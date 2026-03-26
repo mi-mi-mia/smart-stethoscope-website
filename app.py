@@ -112,7 +112,7 @@ col_title, col_logo = st.columns([3, 1])
 with col_title:
     st.markdown('<h1 class="app-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
     st.markdown(
-        '<p class="app-subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>',
+        '<p class="app-subtitle">Analyse a breathing recording to understand potential respiratory conditions.</p>',
         unsafe_allow_html=True,
     )
     st.markdown('<div class="title-divider"></div>', unsafe_allow_html=True)
@@ -220,16 +220,16 @@ if run_prediction:
 
                     st.markdown("""
                     **Bronchiectasis**: A long-term condition where the airways become widened and inflamed.
-                    🔗 [Learn more](https://www.mayoclinic.org/diseases-conditions/bronchiectasis/symptoms-causes/syc-20351190)
+                    🔗 [Learn more](https://europeanlung.org/en/information-hub/lung-conditions/bronchiectasis/)
 
                     **COPD**: A chronic lung condition that causes breathing difficulties.
-                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
+                    🔗 [Learn more](https://europeanlung.org/en/information-hub/lung-conditions/copd/)
 
                     **Pneumonia**: An infection that inflames the lungs, often causing cough and fever.
-                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
+                    🔗 [Learn more](https://europeanlung.org/en/information-hub/lung-conditions/pneumonia/)
 
                     **URTI**: An upper respiratory tract infection, like a cold or sinus infection.
-                    🔗 [Learn more](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
+                    🔗 [Learn more](https://www.nhs.uk/conditions/respiratory-tract-infection/)
 
                      **Healthy**: No clear signs of a respiratory condition detected.
                     """)
