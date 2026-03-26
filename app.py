@@ -43,7 +43,7 @@ st.markdown(
 
     .result-card {
         background-color: rgba(255, 255, 255, 0.45);
-        border: 1px solid rgba(79, 157, 166, 0.35);  /* soft teal border */
+        border: 1px solid rgba(79, 157, 166, 0.35);
         border-radius: 12px;
         padding: 1rem 1rem 0.75rem 1rem;
         margin-top: 1rem;
@@ -52,6 +52,7 @@ st.markdown(
 
     .result-label {
         color: #4f9da6;
+        opacity: 0.85;
         font-size: 0.9rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -67,7 +68,7 @@ st.markdown(
     }
 
     .result-confidence {
-        color: #7d5a78;  /* muted pink-plum accent */
+        color: #a64d79;
         font-size: 1rem;
         font-weight: 600;
         margin-bottom: 0.25rem;
@@ -77,6 +78,26 @@ st.markdown(
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
     }
+
+    div[data-testid="stMarkdownContainer"] a {
+        color: #a64d79;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    div[data-testid="stMarkdownContainer"] a:hover {
+        text-decoration: underline;
+    }
+
+    details summary {
+        color: #1f2a2e;
+        font-weight: 600;
+    }
+
+    details summary:hover {
+        color: #a64d79;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -89,8 +110,12 @@ st.markdown(
 col_title, col_logo = st.columns([3, 1])
 
 with col_title:
-    st.markdown('<h1 class="main-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="app-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
+    st.markdown(
+        '<p class="app-subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>',
+        unsafe_allow_html=True,
+    )
+    st.markdown('<div class="title-divider"></div>', unsafe_allow_html=True)
 
 with col_logo:
     logo_path = "logo_woozle.png"
@@ -99,16 +124,6 @@ with col_logo:
     else:
         pass # if image doesnt exist #Added Ant
 
-#st.markdown(
-#    """
-#    <div class="app-title">Smart Stethoscope</div>
-#    <div class="app-subtitle">
-#        Upload a respiratory audio file, select a breath window, and run a prediction.
-#    </div>
-#    <div class="title-divider"></div>
-#    """,
-#   unsafe_allow_html=True,
-#)
 
 # ---------- Input section ----------
 st.markdown('<div class="section-space">', unsafe_allow_html=True)
@@ -117,9 +132,7 @@ st.markdown('<div class="section-space">', unsafe_allow_html=True)
 audio_file = st.file_uploader("Upload respiratory audio (.wav)", type=["wav"])
 columns = st.columns(2)
 start = columns[0].number_input("Breath start (seconds)", min_value=0.0, format="%.3f")
-columns[0].write(start)
 end = columns[1].number_input("Breath end (seconds)", min_value=0.0, format="%.3f")
-columns[1].write(end)
 
 # State length of selected audio window
 st.caption(f"Selected window: {start:.3f}s to {end:.3f}s")
@@ -178,16 +191,16 @@ if run_prediction:
                 if isinstance(final_proba, list) and len(final_proba) > 0:
                     #top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
                     top_score = max(final_proba)
-                    confidence_text = f"{top_score:.1%} confidence"
+                    confidence_text = f"{top_score:.1%} match"
 
 
-                st.success("Prediction complete")
+                st.success("Analysis complete")
 
                 # PREDICTION RESULT
                 st.markdown(
                     f"""
                     <div class="result-card">
-                        <div class="result-label">Prediction</div>
+                        <div class="result-label">Most likely match</div>
                         <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
@@ -197,23 +210,57 @@ if run_prediction:
 
                 st.caption("This result reflects patterns in the data and should not be interpreted as a medical diagnosis.")
 
-                # Show probabilities
-                st.subheader("Model probabilities")
+                st.markdown("<br>", unsafe_allow_html=True)
 
-                if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
-                    # Sort probabilities highest first
-                    sorted_proba = sorted(
-                        prediction['class_probabilities'].items(),
-                        key=lambda x: x[1],
-                        reverse=True
+                st.subheader("Understanding your result")
+
+                with st.expander("About the conditions we assess"):
+
+                    st.markdown("A brief overview of the respiratory conditions included in this analysis:")
+
+                    st.markdown("""
+                    **Bronchiectasis**: A long-term condition where the airways become widened and inflamed.
+                    🔗 [Learn more](https://www.mayoclinic.org/diseases-conditions/bronchiectasis/symptoms-causes/syc-20351190)
+
+                    **COPD**: A chronic lung condition that causes breathing difficulties.
+                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
+
+                    **Pneumonia**: An infection that inflames the lungs, often causing cough and fever.
+                    🔗 [Learn more](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
+
+                    **URTI**: An upper respiratory tract infection, like a cold or sinus infection.
+                    🔗 [Learn more](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
+
+                     **Healthy**: No clear signs of a respiratory condition detected.
+                    """)
+
+                    st.caption("If you have concerns about your symptoms, we recommend speaking to a GP.")
+
+                # Show probabilities
+                with st.expander("How this result was calculated"):
+
+                    st.caption(
+                        "This shows how closely your audio sample matched patterns associated with each condition."
+                    )
+                    st.caption(
+                        "These percentages reflect relative likelihoods, **not** a confirmed diagnosis."
                     )
 
-                    # Show one line per class
-                    for label, score in sorted_proba:
-                        st.write(f"**{label}:** {score:.1%}")
-                else:
-                    # Fallback in case the API returns a different structure
-                    st.write(final_proba)
+                    if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
+                        # Sort probabilities highest first
+                        sorted_proba = sorted(
+                            prediction['class_probabilities'].items(),
+                            key=lambda x: x[1],
+                            reverse=True
+                        )
+
+                        # Show one line per class
+                        for label, score in sorted_proba:
+                            st.write(f"**{label}:** {score:.1%}")
+
+                    else:
+                        # Fallback in case the API returns a different structure
+                        st.write(final_proba)
 
             else:
                 # Simple error message
