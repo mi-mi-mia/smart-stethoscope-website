@@ -190,11 +190,9 @@ if run_prediction:
                     st.success("Prediction complete")
 
                     # Extract fields from current API response structure
-                    prediction_block = result.get("final_prediction", {})
-
-                    prediction = prediction_block.get("predicted_label", "Unknown")
-                    confidence = prediction_block.get("confidence", None)
-                    class_probs = prediction_block.get("class_probabilities", {})
+                    prediction = result.get("predicted_label", "Unknown")
+                    confidence = result.get("confidence", None)
+                    class_probs = result.get("class_probabilities", {})
 
                     # Confidence text for the result card
                     if confidence is not None:
