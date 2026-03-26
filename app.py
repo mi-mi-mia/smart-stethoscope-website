@@ -5,11 +5,6 @@ API_URL = "https://stetho-api-700547311232.europe-west1.run.app/predict"
 
 st.set_page_config(page_title="Smart Stethoscope", page_icon="🫁")
 
-st.title("Smart Stethoscope")
-st.write(
-    "Upload a respiratory audio file and enter breathing start and end time to get a prediction."
-)
-
 # ---------- Styling ----------
 # Keep this light-touch and safe:
 # - soft blue background to match the deck
@@ -87,8 +82,6 @@ st.markdown(
 )
 
 # ---------- Header ----------
-# Using a small HTML block here gives you better visual hierarchy
-# without needing to heavily style Streamlit components.
 st.markdown(
     """
     <div class="app-title">Smart Stethoscope</div>
