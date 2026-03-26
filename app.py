@@ -14,107 +14,63 @@ st.write(
 st.markdown(
     """
     <style>
-    /* Import fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
-    /* -------- Base typography -------- */
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif;
     }
 
-    /* Headlines (Geo-style substitute) */
-    h1, .main-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        color: #1f2a2e;
-    }
-
-    /* -------- App background -------- */
     .stApp {
-        background-color: #e9eef0;
+        background-color: #f3f5f4;
         color: #1f2a2e;
     }
 
-    /* -------- Custom title -------- */
     .main-title {
-        font-size: 3rem;
-        font-weight: 800;
-        letter-spacing: -1px;
-        margin-bottom: 0.2rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.2rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        color: #1f2a2e;
+        margin-bottom: 0.4rem;
+        line-height: 1;
     }
 
     .subtitle {
-        color: #4a5a5f;
-        font-size: 1.05rem;
-        margin-bottom: 2rem;
+        color: #4f5b60;
+        font-size: 1.1rem;
+        margin-bottom: 2.2rem;
+        max-width: 720px;
     }
 
     .section-label {
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
         color: #2f7f7b;
         text-transform: uppercase;
-        margin-bottom: 0.4rem;
-    }
-
-    /* -------- Cards -------- */
-    .card {
-        background-color: #f8fbfc;
-        padding: 1.2rem 1.2rem 1rem 1.2rem;
-        border-radius: 18px;
-        border: 1px solid #d6e0e3;
-        margin-bottom: 1rem;
-    }
-
-    .result-card {
-        background-color: #fff7f5;
-        padding: 1.2rem;
-        border-radius: 18px;
-        border: 1px solid #f0c8bd;
-        margin-top: 1rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.5rem;
     }
 
     .prediction-label {
         font-family: 'Space Grotesk', sans-serif;
         font-size: 2rem;
-        font-weight: 800;
+        font-weight: 700;
         color: #1f2a2e;
         margin-bottom: 0.2rem;
     }
 
     .small-muted {
-        color: #5b6a6f;
+        color: #5f6a6f;
         font-size: 0.95rem;
     }
 
-    /* -------- Force light mode overrides -------- */
-    .stMarkdown, .stText, p, span, div {
-        color: #1f2a2e !important;
+    /* soften default spacing a bit */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+        max-width: 900px;
     }
-
-    label {
-        color: #1f2a2e !important;
-    }
-
-    input, textarea {
-        color: #1f2a2e !important;
-        background-color: #ffffff !important;
-    }
-
-    /* Buttons */
-    button {
-        background-color: #2f7f7b !important;
-        color: white !important;
-        border-radius: 10px !important;
-    }
-
-    /* Metrics */
-    [data-testid="stMetricValue"] {
-        color: #1f2a2e !important;
-    }
-
     </style>
     """,
     unsafe_allow_html=True,
