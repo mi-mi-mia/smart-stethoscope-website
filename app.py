@@ -93,18 +93,30 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# ---------- Input section ----------
+st.markdown('<div class="section-space">', unsafe_allow_html=True)
+
 # Upload both required files
-audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
+audio_file = st.file_uploader("Upload respiratory audio (.wav)", type=["wav"])
 columns = st.columns(2)
-start = columns[0].number_input("Start time of the breath recording", format="%.3f")
+start = columns[0].number_input("Breath start (seconds)", min_value=0.0, format="%.3f")
 columns[0].write(start)
-end = columns[1].number_input("End time of the breath recording", format="%.3f")
+end = columns[1].number_input("Breath end (seconds)", min_value=0.0, format="%.3f")
 columns[1].write(end)
 
+# State length of selected audio window
+st.caption(f"Selected window: {start:.3f}s to {end:.3f}s")
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+
+# ---------- Action ----------
 # Optional: play the uploaded audio in the UI
 if audio_file is not None:
     st.audio(audio_file)
 
+
+# ---------- Action ----------
 if st.button("Run prediction"):
     if audio_file is None:
         st.error("Please upload an audio file.")
