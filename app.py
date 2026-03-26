@@ -25,10 +25,11 @@ st.markdown(
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
 columns = st.columns(2)
-start = columns[0].number_input("Start time of the breath recording", format="%.3f")
+start = columns[0].number_input("Start time of the breath recording (in seconds)", format="%.3f")
 columns[0].write(start)
-end = columns[1].number_input("End time of the breath recording", format="%.3f")
+end = columns[1].number_input("End time of the breath recording (in seconds)", format="%.3f")
 columns[1].write(end)
+st.write(f"The current length of the audio to be analyzed is: {end - start} seconds")
 
 # Optional: play the uploaded audio in the UI
 if audio_file is not None:
