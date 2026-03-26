@@ -200,7 +200,7 @@ if run_prediction:
                 st.markdown(
                     f"""
                     <div class="result-card">
-                        <div class="result-label">Most likely match</div>
+                        <div class="result-label">Most likely condition</div>
                         <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
