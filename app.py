@@ -170,7 +170,7 @@ if run_prediction:
                     f"""
                     <div class="result-card">
                         <div class="result-label">Prediction</div>
-                        <div class="result-prediction">{prediction}</div>
+                        <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
                     """,
