@@ -86,6 +86,20 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# ---------- Header ----------
+# Using a small HTML block here gives you better visual hierarchy
+# without needing to heavily style Streamlit components.
+st.markdown(
+    """
+    <div class="app-title">Smart Stethoscope</div>
+    <div class="app-subtitle">
+        Upload a respiratory audio file, select a breath window, and run a prediction.
+    </div>
+    <div class="title-divider"></div>
+    """,
+    unsafe_allow_html=True,
+)
+
 # Upload both required files
 audio_file = st.file_uploader("Upload audio file (.wav)", type=["wav"])
 columns = st.columns(2)
