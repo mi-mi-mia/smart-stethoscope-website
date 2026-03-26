@@ -11,11 +11,75 @@ st.write(
 )
 
 # ---------- Styling ----------
+# Keep this light-touch and safe:
+# - soft blue background to match the deck
+# - dark charcoal text for headings
+# - thin teal divider
+# - very subtle result block styling
 st.markdown(
     """
     <style>
     .stApp {
         background-color: #e9eef0;
+    }
+
+    .app-title {
+        color: #1f2a2e;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 0.25rem;
+    }
+
+    .app-subtitle {
+        color: #36454f;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .title-divider {
+        width: 100%;
+        height: 3px;
+        background-color: #4f9da6;  /* muted teal */
+        border-radius: 999px;
+        margin: 0.5rem 0 2rem 0;
+    }
+
+    .result-card {
+        background-color: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(79, 157, 166, 0.35);  /* soft teal border */
+        border-radius: 12px;
+        padding: 1rem 1rem 0.75rem 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .result-label {
+        color: #4f9da6;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.35rem;
+    }
+
+    .result-prediction {
+        color: #1f2a2e;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .result-confidence {
+        color: #7d5a78;  /* muted pink-plum accent */
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .section-space {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
     </style>
     """,
