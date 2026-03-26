@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import requests
 
 API_URL = "https://stetho-api-700547311232.europe-west1.run.app/predict"
@@ -82,16 +83,32 @@ st.markdown(
 )
 
 # ---------- Header ----------
-st.markdown(
-    """
-    <div class="app-title">Smart Stethoscope</div>
-    <div class="app-subtitle">
-        Upload a respiratory audio file, select a breath window, and run a prediction.
-    </div>
-    <div class="title-divider"></div>
-    """,
-    unsafe_allow_html=True,
-)
+
+# --- HEADER ---
+
+col_title, col_logo = st.columns([3, 1])
+
+with col_title:
+    st.markdown('<h1 class="main-title">Smart Stethoscope</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">Upload a respiratory audio file and enter breathing start and end time to get a prediction.</p>', unsafe_allow_html=True)
+
+with col_logo:
+    logo_path = "logo_woozle.png"
+    if os.path.exists(logo_path):
+        st.image(logo_path, width=150)
+    else:
+        pass # if image doesnt exist #Added Ant
+
+#st.markdown(
+#    """
+#    <div class="app-title">Smart Stethoscope</div>
+#    <div class="app-subtitle">
+#        Upload a respiratory audio file, select a breath window, and run a prediction.
+#    </div>
+#    <div class="title-divider"></div>
+#    """,
+#   unsafe_allow_html=True,
+#)
 
 # ---------- Input section ----------
 st.markdown('<div class="section-space">', unsafe_allow_html=True)
