@@ -14,23 +14,9 @@ st.write(
 st.markdown(
     """
     <style>
-    /* Light background */
     .stApp {
         background-color: #e9eef0;
-        color: #1f2a2e;
     }
-
-    /* Force readable text in dark mode */
-    .stMarkdown, p, span, div, label {
-        color: #1f2a2e !important;
-    }
-
-    /* Ensure inputs stay readable */
-    input, textarea {
-        color: #1f2a2e !important;
-        background-color: #ffffff !important;
-    }
-
     </style>
     """,
     unsafe_allow_html=True,
