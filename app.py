@@ -199,10 +199,10 @@ if run_prediction:
                 # Show probabilities
                 st.subheader("Model probabilities")
 
-                if isinstance(final_proba, dict) and len(final_proba) > 0:
+                if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
                     # Sort probabilities highest first
                     sorted_proba = sorted(
-                        final_proba.items(),
+                        prediction['class_probabilities'].items(),
                         key=lambda x: x[1],
                         reverse=True
                     )
