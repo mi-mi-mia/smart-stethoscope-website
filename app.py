@@ -169,7 +169,7 @@ if run_prediction:
                 result = response.json()
 
                 # Pull values out of the response using the ACTUAL API keys
-                prediction_label = result.get("predicted_label", "Unknown")
+                prediction_label = result.get("prediction", "Unknown")
                 confidence = result.get("confidence", None)
                 class_probabilities = result.get("class_probabilities", {})
 
