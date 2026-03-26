@@ -151,24 +151,24 @@ if run_prediction:
             if response.status_code == 200:
                 result = response.json()
 
-                # Pull values out of the response safely
-                prediction = result.get("prediction", "Unknown")
-                final_proba = result.get("final_proba", {})
-
-                # Try to calculate confidence from the probabilities if possible
-                confidence_text = "Confidence unavailable"
-
-                if isinstance(final_proba, dict) and len(final_proba) > 0:
-                    top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
-                    confidence_text = f"{top_score:.1%} confidence"
-
                 st.success("Prediction complete")
 
-                # PREDICTION RESULT
+                 # ---------- Extract fields from API ----------
+                prediction = result.get("predicted_label", "Unknown")
+                confidence = result.get("confidence", None)
+                class_probs = result.get("class_probabilities", {})
+
+                # ---------- SHOW PREDICTION RESULT ----------
+                # Only show confidence if we have it
+                if confidence is not None:
+                    confidence_text = f"{confidence:.1%} confidence"
+                else:
+                    confidence_text = "Confidence unavailable"
+
                 st.markdown(
                     f"""
                     <div class="result-card">
-                        <div class="result-label">Prediction</div>
+                        <div class="result-label">Top prediction</div>
                         <div class="result-prediction">{prediction}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
@@ -176,23 +176,44 @@ if run_prediction:
                     unsafe_allow_html=True,
                 )
 
-                # Show probabilities
-                st.subheader("Model probabilities")
+                # ---------- Other likely classes ----------
+                if isinstance(class_probs, dict) and len(class_probs) > 0:
 
-                if isinstance(final_proba, dict) and len(final_proba) > 0:
-                    # Sort probabilities highest first
-                    sorted_proba = sorted(
-                        final_proba.items(),
+                    # Sort probabilities descending
+                    sorted_probs = sorted(
+                        class_probs.items(),
                         key=lambda x: x[1],
                         reverse=True
                     )
 
-                    # Show one line per class
-                    for label, score in sorted_proba:
-                        st.write(f"**{label}:** {score:.1%}")
-                else:
-                    # Fallback in case the API returns a different structure
-                    st.write(final_proba)
+                    # Remove the top prediction from the list
+                    other_classes = [
+                        (label, score)
+                        for label, score in sorted_probs
+                        if label != prediction
+                    ]
+
+                    # Take top 2 alternatives
+                    other_classes = other_classes[:2]
+
+                    if len(other_classes) > 0:
+                        st.subheader("Other possible classes")
+
+                        for label, score in other_classes:
+                            st.write(f"**{label}:** {score:.1%}")
+
+                 # ---------- Full probabilities (optional, for transparency) ----------
+                with st.expander("All class probabilities"):
+                    if isinstance(class_probs, dict):
+                        for label, score in sorted_probs:
+                            st.write(f"**{label}:** {score:.3f}")
+                    else:
+                        st.write(class_probs)
+
+                # ---------- Demo-safe disclaimer ----------
+                st.caption(
+                    "This model output is for demonstration purposes only and is not a medical diagnosis."
+                )
 
             else:
                 # Simple error message
