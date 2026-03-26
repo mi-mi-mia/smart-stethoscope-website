@@ -14,20 +14,33 @@ st.write(
 st.markdown(
     """
     <style>
+    /* Import fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+    /* -------- Base typography -------- */
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* Headlines (Geo-style substitute) */
+    h1, .main-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #1f2a2e;
+    }
+
+    /* -------- App background -------- */
     .stApp {
         background-color: #e9eef0;
         color: #1f2a2e;
     }
 
-    h1, h2, h3 {
-        color: #1f2a2e;
-    }
-
+    /* -------- Custom title -------- */
     .main-title {
         font-size: 3rem;
         font-weight: 800;
         letter-spacing: -1px;
-        color: #1f2a2e;
         margin-bottom: 0.2rem;
     }
 
@@ -46,6 +59,7 @@ st.markdown(
         margin-bottom: 0.4rem;
     }
 
+    /* -------- Cards -------- */
     .card {
         background-color: #f8fbfc;
         padding: 1.2rem 1.2rem 1rem 1.2rem;
@@ -63,6 +77,7 @@ st.markdown(
     }
 
     .prediction-label {
+        font-family: 'Space Grotesk', sans-serif;
         font-size: 2rem;
         font-weight: 800;
         color: #1f2a2e;
@@ -75,7 +90,6 @@ st.markdown(
     }
 
     /* -------- Force light mode overrides -------- */
-
     .stMarkdown, .stText, p, span, div {
         color: #1f2a2e !important;
     }
@@ -96,7 +110,7 @@ st.markdown(
         border-radius: 10px !important;
     }
 
-    /* Streamlit metric styling */
+    /* Metrics */
     [data-testid="stMetricValue"] {
         color: #1f2a2e !important;
     }
