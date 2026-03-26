@@ -197,37 +197,17 @@ if run_prediction:
 
                 st.caption("This result reflects patterns in the data and should not be interpreted as a medical diagnosis.")
 
-                # Simple condition info (demo-safe, not exhaustive)
-                CONDITION_INFO = {
-                    "COPD": {
-                        "desc": "A chronic lung condition that causes breathing difficulties.",
-                        "url": "https://www.nhs.uk/conditions/chronic-obstructive-pulmonary-disease-copd/",
-                    },
-                    "Pneumonia": {
-                        "desc": "An infection that inflames the lungs, often causing cough and fever.",
-                        "url": "https://www.nhs.uk/conditions/pneumonia/",
-                    },
-                    "Healthy": {
-                        "desc": "No clear signs of a respiratory condition detected.",
-                        "url": "https://www.nhs.uk/live-well/",
-                    },
-                    "URTI": {
-                        "desc": "An upper respiratory tract infection, like a cold or sinus infection.",
-                        "url": "https://www.nhs.uk/conditions/respiratory-tract-infection/",
-                    },
-                    "Bronchiectasis": {
-                        "desc": "A long-term condition where the airways become widened and inflamed.",
-                        "url": "https://www.nhs.uk/conditions/bronchiectasis/",
-                    },
-                }
+                with st.expander("About respiratory conditions"):
 
-                info = CONDITION_INFO.get(prediction)
+                    st.markdown("A brief overview of conditions this model can detect:")
 
-                if info:
-                    st.markdown(f"**About this condition:** {info['desc']}")
-                    st.markdown(f"[Learn more on NHS]({info['url']})")
+                    st.markdown("**Bronchiectasis** — A long-term condition where the airways become widened and inflamed.")
+                    st.markdown("**COPD** — A chronic lung condition that causes breathing difficulties.")
+                    st.markdown("**Healthy** — No clear signs of a respiratory condition detected.")
+                    st.markdown("**Pneumonia** — An infection that inflames the lungs, often causing cough and fever.")
+                    st.markdown("**URTI** — An upper respiratory tract infection, like a cold or sinus infection.")
 
-                st.caption("If you’re concerned about your symptoms, please consult a GP.")
+                    st.caption("If you’re concerned about your symptoms, please consult a GP.")
 
                 # Show probabilities
                 st.subheader("Model probabilities")
