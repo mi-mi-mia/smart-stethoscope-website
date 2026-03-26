@@ -103,6 +103,7 @@ start = columns[0].number_input("Breath start (seconds)", min_value=0.0, format=
 columns[0].write(start)
 end = columns[1].number_input("Breath end (seconds)", min_value=0.0, format="%.3f")
 columns[1].write(end)
+st.write(f"The current length of the audio to be analyzed is: {end - start} seconds")
 
 # State length of selected audio window
 st.caption(f"Selected window: {start:.3f}s to {end:.3f}s")
@@ -169,7 +170,7 @@ if run_prediction:
                     f"""
                     <div class="result-card">
                         <div class="result-label">Prediction</div>
-                        <div class="result-prediction">{prediction}</div>
+                        <div class="result-prediction">{prediction['predicted_label']}</div>
                         <div class="result-confidence">{confidence_text}</div>
                     </div>
                     """,
