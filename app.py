@@ -196,6 +196,8 @@ if run_prediction:
                     unsafe_allow_html=True,
                 )
 
+                st.caption("This is a probabilistic model output and not a medical diagnosis.")
+
                 # Show probabilities
                 st.subheader("Model probabilities")
 
