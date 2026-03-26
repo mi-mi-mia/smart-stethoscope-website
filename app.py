@@ -67,7 +67,7 @@ if st.button("Run prediction"):
                 st.success("Prediction complete")
                 st.subheader("Result")
 
-                st.write(f"**Prediction:** {result['prediction']}")
+                st.write(f"**Prediction:** {result['prediction']['predicted_label']}")
 
                 st.subheader("Model probabilities")
                 st.write(f"Final probabilities: {result['final_proba']}")
