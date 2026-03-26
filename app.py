@@ -16,6 +16,7 @@ st.markdown(
     <style>
     .stApp {
         background-color: #e9eef0;
+        color: #1f2a2e;
     }
 
     h1, h2, h3 {
@@ -72,6 +73,34 @@ st.markdown(
         color: #5b6a6f;
         font-size: 0.95rem;
     }
+
+    /* -------- Force light mode overrides -------- */
+
+    .stMarkdown, .stText, p, span, div {
+        color: #1f2a2e !important;
+    }
+
+    label {
+        color: #1f2a2e !important;
+    }
+
+    input, textarea {
+        color: #1f2a2e !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Buttons */
+    button {
+        background-color: #2f7f7b !important;
+        color: white !important;
+        border-radius: 10px !important;
+    }
+
+    /* Streamlit metric styling */
+    [data-testid="stMetricValue"] {
+        color: #1f2a2e !important;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
