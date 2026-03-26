@@ -14,91 +14,21 @@ st.write(
 st.markdown(
     """
     <style>
+    /* Light background */
     .stApp {
         background-color: #e9eef0;
         color: #1f2a2e;
     }
 
-    h1, h2, h3 {
-        color: #1f2a2e;
-    }
-
-    .main-title {
-        font-size: 3rem;
-        font-weight: 800;
-        letter-spacing: -1px;
-        color: #1f2a2e;
-        margin-bottom: 0.2rem;
-    }
-
-    .subtitle {
-        color: #4a5a5f;
-        font-size: 1.05rem;
-        margin-bottom: 2rem;
-    }
-
-    .section-label {
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        color: #2f7f7b;
-        text-transform: uppercase;
-        margin-bottom: 0.4rem;
-    }
-
-    .card {
-        background-color: #f8fbfc;
-        padding: 1.2rem 1.2rem 1rem 1.2rem;
-        border-radius: 18px;
-        border: 1px solid #d6e0e3;
-        margin-bottom: 1rem;
-    }
-
-    .result-card {
-        background-color: #fff7f5;
-        padding: 1.2rem;
-        border-radius: 18px;
-        border: 1px solid #f0c8bd;
-        margin-top: 1rem;
-    }
-
-    .prediction-label {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #1f2a2e;
-        margin-bottom: 0.2rem;
-    }
-
-    .small-muted {
-        color: #5b6a6f;
-        font-size: 0.95rem;
-    }
-
-    /* -------- Force light mode overrides -------- */
-
-    .stMarkdown, .stText, p, span, div {
+    /* Force readable text in dark mode */
+    .stMarkdown, p, span, div, label {
         color: #1f2a2e !important;
     }
 
-    label {
-        color: #1f2a2e !important;
-    }
-
+    /* Ensure inputs stay readable */
     input, textarea {
         color: #1f2a2e !important;
         background-color: #ffffff !important;
-    }
-
-    /* Buttons */
-    button {
-        background-color: #2f7f7b !important;
-        color: white !important;
-        border-radius: 10px !important;
-    }
-
-    /* Streamlit metric styling */
-    [data-testid="stMetricValue"] {
-        color: #1f2a2e !important;
     }
 
     </style>
