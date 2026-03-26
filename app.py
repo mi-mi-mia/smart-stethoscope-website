@@ -14,63 +14,23 @@ st.write(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
-
-    html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
-    }
-
+    /* Light background */
     .stApp {
-        background-color: #f3f5f4;
+        background-color: #e9eef0;
         color: #1f2a2e;
     }
 
-    .main-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 3.2rem;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-        color: #1f2a2e;
-        margin-bottom: 0.4rem;
-        line-height: 1;
+    /* Force readable text in dark mode */
+    .stMarkdown, p, span, div, label {
+        color: #1f2a2e !important;
     }
 
-    .subtitle {
-        color: #4f5b60;
-        font-size: 1.1rem;
-        margin-bottom: 2.2rem;
-        max-width: 720px;
+    /* Ensure inputs stay readable */
+    input, textarea {
+        color: #1f2a2e !important;
+        background-color: #ffffff !important;
     }
 
-    .section-label {
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        color: #2f7f7b;
-        text-transform: uppercase;
-        margin-top: 1.2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .prediction-label {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1f2a2e;
-        margin-bottom: 0.2rem;
-    }
-
-    .small-muted {
-        color: #5f6a6f;
-        font-size: 0.95rem;
-    }
-
-    /* soften default spacing a bit */
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 3rem;
-        max-width: 900px;
-    }
     </style>
     """,
     unsafe_allow_html=True,
