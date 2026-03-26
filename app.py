@@ -128,7 +128,10 @@ if st.button("Run prediction"):
 
             else:
                 st.error("The API returned an error.")
-                st.text(response.text)
+                st.write("Response text:")
+                st.write(response.text)
+                st.write("Response headers:")
+                st.write(dict(response.headers))
 
         except requests.exceptions.Timeout:
             st.error("The request timed out.")
