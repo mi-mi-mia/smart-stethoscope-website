@@ -199,25 +199,35 @@ if run_prediction:
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
-                st.subheader("Learn more about your result")
+                st.subheader("Understanding your result")
 
-                with st.expander("About respiratory conditions"):
+                with st.expander("About the conditions we assess"):
 
-                    st.markdown("A brief overview of conditions this model can detect:")
+                    st.markdown("A brief overview of the respiratory conditions included in this analysis:")
 
-                    st.markdown("**Bronchiectasis** — A long-term condition where the airways become widened and inflamed.")
-                    st.markdown("**COPD** — A chronic lung condition that causes breathing difficulties.")
-                    st.markdown("**Healthy** — No clear signs of a respiratory condition detected.")
-                    st.markdown("**Pneumonia** — An infection that inflames the lungs, often causing cough and fever.")
-                    st.markdown("**URTI** — An upper respiratory tract infection, like a cold or sinus infection.")
+                    st.markdown("""
+                    **Bronchiectasis**: A long-term condition where the airways become widened and inflamed.
+                    [Learn more 🔗](https://www.mayoclinic.org/diseases-conditions/bronchiectasis/symptoms-causes/syc-20351190)
 
-                    st.caption("If you’re concerned about your symptoms, please consult a GP.")
+                    **COPD**: A chronic lung condition that causes breathing difficulties.
+                    [Learn more 🔗](https://www.who.int/news-room/fact-sheets/detail/chronic-obstructive-pulmonary-disease-(copd))
+
+                    **Pneumonia** — An infection that inflames the lungs, often causing cough and fever.
+                    [Learn more 🔗](https://www.who.int/news-room/fact-sheets/detail/pneumonia)
+
+                    **URTI** — An upper respiratory tract infection, like a cold or sinus infection.
+                    [Learn more 🔗](https://www.ncbi.nlm.nih.gov/books/NBK532961/)
+
+                     **Healthy** — No clear signs of a respiratory condition detected.
+                    """)
+
+                    st.caption("If you have concerns about your symptoms, we recommend speaking to a GP.")
 
                 # Show probabilities
-                with st.expander("About your prediction"):
+                with st.expander("How this result was calculated"):
 
                     st.caption(
-                        "These numbers indicate how strongly the predictive model matched each condition, based on the audio pattern."
+                        "This shows how closely your audio sample matched patterns associated with each condition."
                     )
 
                     if isinstance(prediction['class_probabilities'], dict) and len(prediction['class_probabilities']) > 0:
