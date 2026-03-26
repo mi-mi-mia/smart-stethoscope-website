@@ -176,9 +176,11 @@ if run_prediction:
                 # Try to calculate confidence from the probabilities if possible
                 confidence_text = "Confidence unavailable"
 
-                if isinstance(final_proba, dict) and len(final_proba) > 0:
-                    top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
+                if isinstance(final_proba, list) and len(final_proba) > 0:
+                    #top_label, top_score = max(final_proba.items(), key=lambda x: x[1])
+                    top_score = max(final_proba)
                     confidence_text = f"{top_score:.1%} confidence"
+
 
                 st.success("Prediction complete")
 
